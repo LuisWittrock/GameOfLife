@@ -156,7 +156,7 @@ class Panel : Frame
         void drawWindow()
         {
             window.create(VideoMode(WINDOW_HEIGHT, WINDOW_WIDTH), "GAME OF LIFE");
-            cout << "controls : 'W' makes the simulation faster \n 'S' makes the simulation slower \n 'R' randomizes the state of every cell";
+            cout << "controls :\n 'W' makes the simulation faster \n 'S' makes the simulation slower \n 'R' randomizes the state of every cell";
             float speed = 0.3;
             space.randomize();
             clock.restart();
