@@ -78,13 +78,11 @@ class Space : Frame
 
         void updateField()
         {
-            cout << "updateField" << endl;
             for(int y = 0; y<50; y++)
             {
                 for(int x = 0; x<50; x++)
                 {
                     int neighbours = countNeighbours(y,x);
-                    if(x == 0 && y == 0) cout << neighbours << endl;
                     if(field[y][x] == true && (neighbours < 2 || neighbours > 3))
                     {
                         tmp_field[y][x] = false;
@@ -127,6 +125,7 @@ class Panel : Frame
     public:
 
         Space space;
+        Clock clock;
 
         void redraw()
         {
@@ -157,14 +156,42 @@ class Panel : Frame
         void drawWindow()
         {
             window.create(VideoMode(WINDOW_HEIGHT, WINDOW_WIDTH), "GAME OF LIFE");
+            cout << "controls : 'W' makes the simulation faster \n 'S' makes the simulation slower \n 'R' randomizes the state of every cell";
+            float speed = 0.3;
             space.randomize();
+            clock.restart();
             while(window.isOpen())
             {
-                sleep(seconds(0.1));
-                window.clear();
-                redraw();
-                window.display();
-                update();
+                
+                
+                if(Keyboard::isKeyPressed(Keyboard::W))
+                {
+                    speed += 0.01;
+                    cout << "speed: " << speed << endl;
+                    sleep(milliseconds(10));
+                } 
+                if(Keyboard::isKeyPressed(Keyboard::S) && !speed < 0.01)
+                {
+                    speed -= 0.01;
+                    cout << "speed: " << speed << endl;
+                    sleep(milliseconds(10));
+                } 
+                if(Keyboard::isKeyPressed(Keyboard::R))
+                {
+                    space.randomize();
+                    cout << "Randomized \n";
+                    sleep(milliseconds(90));
+                } 
+                Time elapsed = clock.getElapsedTime();
+                if(elapsed.asSeconds() >= speed)
+                {
+                    window.clear();
+                    redraw();
+                    window.display();
+                    update();
+                    clock.restart();
+                }
+                
 
                 while(window.pollEvent(Frame::Frame::event))
                 {
