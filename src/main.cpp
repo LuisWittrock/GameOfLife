@@ -170,7 +170,7 @@ class Panel : Frame
                     cout << "speed: " << speed << endl;
                     sleep(milliseconds(10));
                 } 
-                if(Keyboard::isKeyPressed(Keyboard::S) && !speed < 0.01)
+                if(Keyboard::isKeyPressed(Keyboard::S) && speed > 0.01)
                 {
                     speed -= 0.01;
                     cout << "speed: " << speed << endl;
