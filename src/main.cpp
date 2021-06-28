@@ -23,7 +23,8 @@ class Frame
 
 class Space : Frame
 {
-    public:
+    public:       
+
         bool field[50][50];
         bool tmp_field[50][50];
         RectangleShape alive;
@@ -156,10 +157,11 @@ class Panel : Frame
         void drawWindow()
         {
             window.create(VideoMode(WINDOW_HEIGHT, WINDOW_WIDTH), "GAME OF LIFE");
-            cout << "controls :\n 'W' makes the simulation faster \n 'S' makes the simulation slower \n 'R' randomizes the state of every cell";
+            cout << "controls :\n 'W' makes the simulation faster \n 'S' makes the simulation slower \n 'R' randomizes the state of every cell \n 'SPACE' pauses the simulation";
             float speed = 0.3;
             space.randomize();
             clock.restart();
+            bool pause = false;
             while(window.isOpen())
             {
                 
@@ -181,9 +183,25 @@ class Panel : Frame
                     space.randomize();
                     cout << "Randomized \n";
                     sleep(milliseconds(90));
+                }
+                if(Keyboard::isKeyPressed(Keyboard::Space))
+                {
+                    
+                    if(pause)
+                    {
+                        pause = false;
+                        cout << "PLAY \n";
+                    } 
+                    else
+                    {
+                        pause = true;
+                        cout << "PAUSED \n";
+                    } 
+                    sleep(seconds(1));
                 } 
+
                 Time elapsed = clock.getElapsedTime();
-                if(elapsed.asSeconds() >= speed)
+                if(elapsed.asSeconds() >= speed && !pause)
                 {
                     window.clear();
                     redraw();
