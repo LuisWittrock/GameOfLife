@@ -197,7 +197,7 @@ class Panel : Frame
                         pause = true;
                         cout << "PAUSED \n";
                     } 
-                    sleep(seconds(1));
+                    sleep(seconds(0.5));
                 } 
 
                 Time elapsed = clock.getElapsedTime();
